@@ -6,11 +6,23 @@ import makeStyles from '../makeStyles';
 import getThemeProps from '../getThemeProps';
 import useTheme from '../useTheme';
 
+function omit(input, fields) {
+  const output = {};
+
+  Object.keys(input).forEach((prop) => {
+    if (fields.indexOf(prop) === -1) {
+      output[prop] = input[prop];
+    }
+  });
+
+  return output;
+}
+
 // Link a style sheet with a component.
 // It does not modify the component passed to it;
 // instead, it returns a new component, with a `classes` property.
 const withStyles = (stylesOrCreator, options = {}) => (Component) => {
-  const { defaultTheme, withTheme = false, name, ...stylesOptions } = options;
+  const { defaultTheme, withTheme = false, name, filterProps, ...stylesOptions } = options;
 
   if (process.env.NODE_ENV !== 'production') {
     if (Component === undefined) {
@@ -51,7 +63,7 @@ const withStyles = (stylesOrCreator, options = {}) => (Component) => {
     const classes = useStyles({ ...Component.defaultProps, ...props });
 
     let theme;
-    let more = other;
+    let more = omit(other, filterProps);
 
     if (typeof name === 'string' || withTheme) {
       // name and withTheme are invariant in the outer scope

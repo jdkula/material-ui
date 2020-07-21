@@ -11,6 +11,15 @@ import { Theme as DefaultTheme } from './createMuiTheme';
 // Only difference is that ComponentCreator has a default theme type
 // If you need to change these types, update the ones in @material-ui/styles as well
 
+export interface StyledOptions {
+  filterProps?: string[];
+}
+
+export interface StyleGeneratorFunction<Theme, Props extends {}> {
+  (props: { theme: Theme } & Props): CreateCSSProperties<Props>;
+  filterProps?: string[];
+}
+
 /**
  * @internal
  */
@@ -18,10 +27,8 @@ export type ComponentCreator<Component extends React.ElementType> = <
   Theme = DefaultTheme,
   Props extends {} = {}
 >(
-  styles:
-    | CreateCSSProperties<Props>
-    | ((props: { theme: Theme } & Props) => CreateCSSProperties<Props>),
-  options?: WithStylesOptions<Theme>
+  styles: CreateCSSProperties<Props> | StyledOptions | StyleGeneratorFunction<Theme, Props>,
+  options?: WithStylesOptions<Theme> | StyledOptions
 ) => React.ComponentType<
   Omit<
     JSX.LibraryManagedAttributes<Component, React.ComponentProps<Component>>,

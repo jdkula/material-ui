@@ -76,6 +76,7 @@ export interface WithStylesOptions<Theme = DefaultTheme> extends JSS.StyleSheetF
   flip?: boolean;
   withTheme?: boolean;
   name?: string;
+  filterProps?: string[];
 }
 
 export type ClassNameMap<ClassKey extends string = string> = Record<ClassKey, string>;

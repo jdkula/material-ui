@@ -312,4 +312,27 @@ describe('withStyles', () => {
       expect(propsTheme).to.equal(theme);
     });
   });
+
+  describe('option: filterProps', () => {
+    it('should omit only the specified props from being passed to the component', () => {
+      const styles = { root: { padding: 1 } };
+      const outerProps = { omitted: 1, kept: 1 };
+      let innerProps;
+
+      const Component = (props) => {
+        innerProps = props;
+        return null;
+      };
+
+      const StyledComponent = withStyles(styles, { filterProps: ['omitted'] })(Component);
+      render(<StyledComponent />);
+
+      expect(innerProps.omitted).to.be.undefined();
+      expect(innerProps.kept).to.equal(1);
+      expect(innerProps.classes).to.have.property('root');
+
+      expect(outerProps.omitted).to.equal(1);
+      expect(outerProps.classes).to.be.undefined();
+    });
+  });
 });

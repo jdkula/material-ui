@@ -173,6 +173,7 @@ Link a style sheet with a function component using the **styled components** pat
 - `options.name` (_String_ [optional]): The name of the style sheet. Useful for debugging.
   If the value isn't provided, it will try to fallback to the name of the component.
 - `options.flip` (_Boolean_ [optional]): When set to `false`, this sheet will opt-out the `rtl` transformation. When set to `true`, the styles are inversed. When set to `null`, it follows `theme.direction`.
+- `options.filterProps` (_String[]_ [optional]): Accepts a list of props that are prevented from being passed on to the wrapped component..
 - The other keys are forwarded to the options argument of [jss.createStyleSheet([styles], [options])](https://cssinjs.org/jss-api/#create-style-sheet).
 
 ### Returns
@@ -307,6 +308,7 @@ Some implementation details that might be interesting to being aware of:
 - `options.name` (_String_ [optional]): The name of the style sheet. Useful for debugging.
   If the value isn't provided, it will try to fallback to the name of the component.
 - `options.flip` (_Boolean_ [optional]): When set to `false`, this sheet will opt-out the `rtl` transformation. When set to `true`, the styles are inversed. When set to `null`, it follows `theme.direction`.
+- `options.filterProps` (_String[]_ [optional]): Accepts a list of props that are prevented from being passed on to the wrapped component..
 - The other keys are forwarded to the options argument of [jss.createStyleSheet([styles], [options])](https://cssinjs.org/jss-api/#create-style-sheet).
 
 ### Returns

@@ -84,6 +84,29 @@ describe('styled', () => {
     expect(wrapper.find('div').props()['data-test']).to.equal('enzyme');
   });
 
+  describe('option: filterProps', () => {
+    it('should omit only the specified props from being passed to the component', () => {
+      const styles = { padding: 1 };
+      const outerProps = { omitted: 1, kept: 1 };
+      let innerProps;
+
+      const Component = (props) => {
+        innerProps = props;
+        return null;
+      };
+
+      const StyledComponent = styled(Component)(styles, { filterProps: ['omitted'] });
+      mount(<StyledComponent />);
+
+      expect(innerProps.omitted).to.be.undefined();
+      expect(innerProps.kept).to.equal(1);
+      expect(innerProps.className).to.be.a('string');
+
+      expect(outerProps.omitted).to.equal(1);
+      expect(outerProps.className).to.be.undefined();
+    });
+  });
+
   describe('warnings', () => {
     beforeEach(() => {
       PropTypes.resetWarningCache();

@@ -49,6 +49,13 @@ export default function styled(Component) {
         ? (theme) => ({ root: (props) => style({ theme, ...props }) })
         : { root: style };
 
+    let filterProps;
+
+    if (stylesOptions.filterProps) {
+      filterProps = stylesOptions.filterProps;
+      delete stylesOptions.filterProps;
+    }
+
     const useStyles = makeStyles(stylesOrCreator, {
       Component,
       name: name || Component.displayName,
@@ -56,10 +63,18 @@ export default function styled(Component) {
       ...stylesOptions,
     });
 
-    let filterProps;
     let propTypes = {};
 
     if (style.filterProps) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.warn(
+          [
+            `Material-UI: passing filterProps in the style object has been deprecated.`,
+            'Please place filterProps in the options object instead.',
+          ].join('\n'),
+        );
+      }
+
       filterProps = style.filterProps;
       delete style.filterProps;
     }
